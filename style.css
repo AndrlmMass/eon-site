@@ -1,4 +1,4 @@
-/* EON's own design, copied from the app's src/theme.ts: the same grounds, greys, area colours and
+/* Ambrose's own design, copied from the app's src/theme.ts: the same grounds, greys, area colours and
    type. Dark is the default, as in the app; daylight follows the visitor's system setting. */
 *,
 *::before,
@@ -113,11 +113,15 @@ p {
   gap: 24px;
   height: 60px;
 }
+/* the app's wordmark: the helmet and the name in lower case, in Rubik */
 .word {
-  font-family: var(--display);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: Rubik, system-ui, sans-serif;
   font-size: 22px;
   font-weight: 500;
-  letter-spacing: 0.14em;
+  letter-spacing: -0.01em;
   color: var(--ink);
   text-decoration: none;
 }
@@ -266,7 +270,13 @@ p {
   font-weight: 600;
 }
 .launch {
+  --hue: var(--flare);
+}
+.energy {
   --hue: var(--health);
+}
+.food {
+  --hue: var(--food);
 }
 .probe {
   --hue: var(--calm);
