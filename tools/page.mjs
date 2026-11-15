@@ -11,7 +11,7 @@ const CHROME = process.env.CHROME ?? 'C:/Program Files/Google/Chrome/Application
 const PORT = 9334;
 const PAGES = ['', 'privacy.html'];
 const SIZES = [
-  { name: 'phone', width: 412, height: 915, deviceScaleFactor: 1.6, mobile: true },
+  { name: 'phone', width: 412, height: 915, deviceScaleFactor: 1.3, mobile: true },
   { name: 'desktop', width: 1366, height: 900, deviceScaleFactor: 1, mobile: false },
 ];
 
@@ -51,6 +51,8 @@ for (const size of SIZES) {
     for (const page of PAGES) {
       await send('Page.navigate', { url: `${SITE}/${page}` });
       await wait(1500);
+      // everything that rises into view, shown, since a picture can't scroll
+      await send('Runtime.evaluate', { expression: "document.querySelectorAll('.rise').forEach((e) => e.classList.add('in'))" });
       // a viewport as tall as the page, so every lazy picture loads and nothing repeats
       const tall = await send('Runtime.evaluate', { expression: 'document.documentElement.scrollHeight', returnByValue: true });
       await send('Emulation.setDeviceMetricsOverride', { ...metrics, height: tall.result.value });

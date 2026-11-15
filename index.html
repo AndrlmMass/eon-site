@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Ambrose: your watch's data, read on your phone</title>
+    <title>Ambrose: your watch measures, Ambrose explains</title>
     <meta
       name="description"
-      content="Ambrose turns what your watch writes to Health Connect into energy, recovery, food, training and pace of aging. Worked out on your phone, with no account and no Ambrose server."
+      content="Energy, food, training and how fast you're aging, worked out on your phone from what your watch already records, and said in plain words."
     />
+    <!-- no AI training or AI answers from this page; robots.txt turns the known AI crawlers away -->
+    <meta name="robots" content="noai, noimageai" />
     <meta name="theme-color" content="#1c1d22" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#dadde3" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="mark.svg" type="image/svg+xml" />
@@ -25,165 +27,279 @@
       <div class="wrap">
         <a class="word" href="./"><img src="mark.svg" alt="" width="34" height="34" />ambrose</a>
         <nav>
-          <a class="wide" href="#launch">The app</a>
-          <a href="#privacy">Privacy</a>
-          <a href="#join">Join the test</a>
+          <a class="wide" href="#energy">The app</a>
+          <a class="wide" href="#science">Science</a>
+          <a href="privacy.html">Privacy</a>
+          <a class="pill" href="#join">Join the test</a>
         </nav>
       </div>
     </header>
 
-    <main class="wrap">
+    <main>
+      <!-- ============ hero ============ -->
       <section class="hero">
-        <div>
-          <h1>Your watch already knows. <em>Ambrose</em> tells you what it means.</h1>
+        <div class="stars" aria-hidden="true"></div>
+        <div class="wrap hero-in">
+          <h1>Your watch measures.<br /><span>Ambrose explains.</span></h1>
           <p class="lede">
-            Energy, recovery, food, training and how fast you're aging, from the data your watch or ring writes to
-            Health Connect. Every number is worked out on your phone. There's no account, and no Ambrose server.
+            Energy, food, training and how fast you're aging, worked out on your phone from what your watch
+            already records, and said in plain words.
           </p>
-          <a class="button" href="#join">Join the test</a>
-          <span class="note">Android, by invitation, while Ambrose is in testing.</span>
-        </div>
-        <picture class="phone">
-          <source srcset="img/launch-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/launch-dark.png" alt="Ambrose's Launch screen: energy 49%, food 83 and exertion 54 around your avatar" width="1236" height="2745" />
-        </picture>
-      </section>
-
-      <section class="facts">
-        <div class="fact"><b>Any watch on Health Connect</b><span>Fitbit, Pixel Watch, Garmin, Samsung, Oura and more.</span></div>
-        <div class="fact"><b>Worked out on your phone</b><span>Your data stays there. Ambrose never sees it.</span></div>
-        <div class="fact"><b>From published research</b><span>Every score is explained, down to its formula.</span></div>
-      </section>
-
-      <section class="area launch" id="launch">
-        <div class="copy">
-          <span class="kicker">Launch</span>
-          <h2>Your body today, at a glance.</h2>
-          <p>Three rings around you, a health monitor that knows your usual, and the day as it happened.</p>
-          <ul>
-            <li><b>Energy, food and exertion</b> in three rings, with you in the middle</li>
-            <li><b>Resting heart rate, HRV, steps and zone minutes</b> against your own usual and people your age</li>
-            <li><b>The day</b> on a timeline: meals, workouts and sleep</li>
-          </ul>
-        </div>
-        <picture class="phone">
-          <source srcset="img/launch-day-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/launch-day-dark.png" alt="The health monitor and today's meals on a timeline" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="area energy flip">
-        <div class="copy">
-          <span class="kicker">Energy</span>
-          <h2>How much you have left today.</h2>
-          <p>
-            Energy starts the day at your recovery and runs down while you're awake, faster in hard training and
-            stressful spells. A nap or a calm moment gives some back. Ambrose says in plain words what moved it, and
-            where you'll be by bedtime.
-          </p>
-          <ul>
-            <li><b>Built on published models</b> of sleep pressure, training load and stress</li>
-            <li><b>Ways to restore some</b>, and how much each would give back</li>
-          </ul>
-        </div>
-        <picture class="phone">
-          <source srcset="img/energy-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/energy-dark.png" alt="Energy at 49%, with the day's curve and why it stands there" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="area food">
-        <div class="copy">
-          <span class="kicker">Food</span>
-          <h2>A diet score that means something.</h2>
-          <p>
-            Log a meal by searching, scanning its barcode or choosing one you eat often. Ambrose scores the day on what
-            matters for a long life: vegetables, fruit, fibre, legumes, nuts and good fats, against red meat, sugar,
-            salt and ultra-processed food.
-          </p>
-        </div>
-        <picture class="phone">
-          <source srcset="img/food-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/food-dark.png" alt="Food: a diet score of 83, and what it's made of" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="area probe flip">
-        <div class="copy">
-          <span class="kicker">Probe</span>
-          <h2>What moves your numbers.</h2>
-          <p>
-            Probe looks for links in your own days: more sleep and your mood the next day, a late coffee and your
-            night, steps and your HRV. It tells you how sure it is, and only calls a link confirmed when your data
-            holds it up.
-          </p>
-        </div>
-        <picture class="phone">
-          <source srcset="img/probe-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/probe-dark.png" alt="Probe: every extra hour of sleep, 0.39 more mood points that day, confirmed" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="area thrust">
-        <div class="copy">
-          <span class="kicker">Thrust</span>
-          <h2>Train hard on the right days.</h2>
-          <p>Start a workout and log it as you go, and see how your training load sits against the range that suits you.</p>
-          <ul>
-            <li><b>Training load</b> over the last week: building, maintaining or easing off</li>
-            <li><b>Activity</b> for every day of the last six months</li>
-            <li><b>Time trained, cardio focus and zone minutes</b> over 30 days</li>
-          </ul>
-        </div>
-        <picture class="phone">
-          <source srcset="img/thrust-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/thrust-dark.png" alt="Thrust: training load 89 a day, maintaining, and six months of activity" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="area orbit flip">
-        <div class="copy">
-          <span class="kicker">Orbit</span>
-          <h2>How fast you're aging.</h2>
-          <p>
-            Your pace of aging from your fitness, sleep, training and diet, built from published research. 0.91×
-            means each calendar year costs your body eleven months. Orbit shows what makes up your pace, and which
-            part has the most room to move.
-          </p>
-        </div>
-        <picture class="phone">
-          <source srcset="img/orbit-light.png" media="(prefers-color-scheme: light)" />
-          <img src="img/orbit-dark.png" alt="Orbit: pace of aging 0.91×, blood age 31.4 against 34.0" width="1236" height="2745" loading="lazy" />
-        </picture>
-      </section>
-
-      <section class="band" id="privacy">
-        <h2>Your data stays on your phone.</h2>
-        <p>Ambrose reads Health Connect and does the rest on the phone. Something leaves it only when you use a feature that needs it.</p>
-        <div class="cards">
-          <div class="card">
-            <h3>No account</h3>
-            <p>Nothing to sign up for, and no Ambrose server holding your data. Uninstalling deletes Ambrose's copy.</p>
+          <div class="cta">
+            <a class="button" href="#join">Join the test</a>
+            <span class="note">Android · free while in testing</span>
           </div>
-          <div class="card">
-            <h3>AI only if you want it</h3>
-            <p>AI is off by default. Turn it on with the AI service of your choice, even one on your own computer.</p>
-          </div>
-          <div class="card">
-            <h3>Read-only</h3>
-            <p>Ambrose never writes to Health Connect, and you can take any permission away there at any time.</p>
+          <div class="constellation rise">
+            <img class="piece soft big" data-p="c-rings" src="img/cards/c-rings-dark.png" style="--w: 396" width="396" height="396" alt="Energy 49%, food 83 and exertion 53, in three rings around your avatar" />
+            <img class="piece float f1" data-p="c-rhr" src="img/cards/c-rhr-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="Resting heart rate 57.6 bpm, top 15% of adults" />
+            <img class="piece float f2" data-p="c-hrv" src="img/cards/c-hrv-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="HRV 36.4 ms, below your usual" />
           </div>
         </div>
-        <p style="margin-top: 20px"><a href="privacy.html">Read the privacy policy</a></p>
       </section>
 
+      <!-- ============ energy ============ -->
+      <section class="chapter" id="energy" style="--hue: var(--flare)">
+        <div class="wrap">
+          <div class="head rise">
+            <span class="kicker">Energy</span>
+            <h2>Know what you have left.</h2>
+            <p>
+              Your energy starts the day at last night's recovery and runs down as you go. Hard training and
+              stressful hours take more; a nap or a quiet spell gives some back. Ambrose
+              <em>tells you in a sentence what moved it</em>, and where you'll be by bedtime.
+            </p>
+          </div>
+          <div class="switch rise" data-auto="5000">
+            <div class="tabs" role="tablist" aria-label="Time of day">
+              <button role="tab" aria-selected="true">09:00<i></i></button>
+              <button role="tab" aria-selected="false">15:30<i></i></button>
+              <button role="tab" aria-selected="false">20:30<i></i></button>
+            </div>
+            <div class="stage pair">
+              <div class="slide on">
+                <img class="piece soft" data-p="c-globe-morning" src="img/cards/c-globe-morning-dark.png" style="--w: 412" width="412" height="302" alt="Energy 61, medium high, at nine in the morning" />
+                <img class="piece" data-p="c-chart-morning" src="img/cards/c-chart-morning-dark.png" style="--w: 380; --r: 22" width="380" height="358" alt="" />
+              </div>
+              <div class="slide">
+                <img class="piece soft" data-p="c-globe-afternoon" src="img/cards/c-globe-afternoon-dark.png" style="--w: 412" width="412" height="324" alt="Energy 49, medium low, after a nap" />
+                <img class="piece" data-p="c-chart-afternoon" src="img/cards/c-chart-afternoon-dark.png" style="--w: 380; --r: 22" width="380" height="358" alt="" />
+              </div>
+              <div class="slide">
+                <img class="piece soft" data-p="c-globe-evening" src="img/cards/c-globe-evening-dark.png" style="--w: 412" width="412" height="324" alt="Energy in the evening, after a run" />
+                <img class="piece" data-p="c-chart-evening" src="img/cards/c-chart-evening-dark.png" style="--w: 380; --r: 22" width="380" height="358" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ food ============ -->
+      <section class="chapter" id="food" style="--hue: var(--food)">
+        <div class="wrap">
+          <div class="head rise">
+            <span class="kicker">Food</span>
+            <h2>Eat for the long run.</h2>
+            <p>
+              Search a food, scan its barcode or pick a meal you eat often. Ambrose scores the day on
+              <em>what research ties to a longer life</em>: vegetables, fruit, fibre, legumes, nuts and good fats,
+              against red meat, sugar, salt and ultra-processed food.
+            </p>
+          </div>
+          <div class="collage food-collage rise">
+            <img class="piece soft" data-p="c-diet" src="img/cards/c-diet-dark.png" style="--w: 412" width="412" height="240" alt="Diet score today 83, good so far" />
+            <img class="piece" data-p="c-radar" src="img/cards/c-radar-dark.png" style="--w: 376; --r: 20" width="376" height="450" alt="What the score is made of: veg, fruit, fibre, legumes and more, against where you want to be" />
+            <img class="piece" data-p="c-day" src="img/cards/c-day-dark.png" style="--w: 380; --r: 24" width="380" height="283" alt="Today's meals on a timeline: a skyr bowl, lentil soup, an apple and almonds" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ probe ============ -->
+      <section class="chapter" id="probe" style="--hue: var(--calm)">
+        <div class="wrap split">
+          <div class="head rise">
+            <span class="kicker">Probe</span>
+            <h2>Find out what works for you.</h2>
+            <p>
+              Probe looks for links in your own days: sleep and the next day's mood, deep sleep and your HRV, a
+              late coffee and your night. It says how sure it is, and <em>only calls a link confirmed when your
+              data holds it up</em>.
+            </p>
+            <div class="tabs vertical" role="tablist" aria-label="Findings">
+              <button role="tab" aria-selected="true">Sleep and mood<i></i></button>
+              <button role="tab" aria-selected="false">Deep sleep and HRV<i></i></button>
+            </div>
+          </div>
+          <div class="switch rise" data-auto="5500" data-tabs-before>
+            <div class="stage">
+              <div class="slide on">
+                <img class="piece" data-p="c-find-sleep" src="img/cards/c-find-sleep-dark.png" style="--w: 380; --r: 22" width="380" height="469" alt="Every extra hour of sleep: 0.39 more mood points that day, confirmed" />
+              </div>
+              <div class="slide">
+                <img class="piece" data-p="c-find-deep" src="img/cards/c-find-deep-dark.png" style="--w: 380; --r: 22" width="380" height="469" alt="Every extra 10 minutes of deep sleep: 2.8 ms higher HRV that night, partly confirmed" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ thrust ============ -->
+      <section class="chapter" id="thrust" style="--hue: var(--active)">
+        <div class="wrap">
+          <div class="head rise">
+            <span class="kicker">Thrust</span>
+            <h2>Train hard on the right days.</h2>
+            <p>
+              Log a workout as you lift, and see your training load against <em>the range that suits you
+              now</em>: building, holding or easing off. Thirty-day cards show the time you put in and where it went.
+            </p>
+          </div>
+          <div class="collage thrust-collage rise">
+            <img class="piece" data-p="c-load" src="img/cards/c-load-dark.png" style="--w: 380; --r: 22" width="380" height="335" alt="Training load 89 a day over the last seven days, maintaining" />
+            <div class="stack">
+              <img class="piece" data-p="c-trained" src="img/cards/c-trained-dark.png" style="--w: 185; --r: 22" width="185" height="159" alt="Time trained in 30 days" />
+              <img class="piece" data-p="c-zone" src="img/cards/c-zone-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="Zone minutes this week, above your usual" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ orbit ============ -->
+      <section class="chapter" id="orbit" style="--hue: var(--orbit)">
+        <div class="wrap split flip">
+          <div class="head rise">
+            <span class="kicker">Orbit</span>
+            <h2>See how fast you're aging.</h2>
+            <p>
+              Your bio age comes from seven things your watch already knows, from resting heart rate and steps to
+              sleep and cardio fitness, each <em>weighed by how much it changes the risk of dying early</em>. Your
+              pace of aging says how fast it's moving.
+            </p>
+          </div>
+          <div class="collage orbit-collage rise">
+            <img class="piece soft" data-p="c-holo" src="img/cards/c-holo-dark.png" style="--w: 412" width="412" height="327" alt="Bio age 31, as a hologram" />
+            <img class="piece" data-p="c-pace" src="img/cards/c-pace-dark.png" style="--w: 380; --r: 22" width="380" height="90" alt="Pace of aging 0.88: saving 1.4 months of aging every year" />
+            <img class="piece" data-p="c-makeup" src="img/cards/c-makeup-dark.png" style="--w: 380; --r: 22" width="380" height="383" alt="What your bio age is made of: years off for resting heart rate, steps, zone time and cardio fitness" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ health monitor ============ -->
+      <section class="chapter" id="monitor" style="--hue: var(--health)">
+        <div class="wrap split">
+          <div class="head rise">
+            <span class="kicker">Health monitor</span>
+            <h2>Your normal, not an average.</h2>
+            <p>
+              Each vital is read against your own usual range, so a change stands out the day it happens. Then
+              against <em>people your age</em>, so you know where you stand.
+            </p>
+          </div>
+          <div class="bento rise">
+            <img class="piece" data-p="c-rhr" src="img/cards/c-rhr-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="Resting heart rate 57.6 bpm" />
+            <img class="piece" data-p="c-hrv" src="img/cards/c-hrv-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="HRV 36.4 ms" />
+            <img class="piece" data-p="c-steps" src="img/cards/c-steps-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="Steps 8,775, your usual" />
+            <img class="piece" data-p="c-zone" src="img/cards/c-zone-dark.png" style="--w: 185; --r: 22" width="185" height="133" alt="Zone minutes 210 this week" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ seasons ============ -->
+      <section class="chapter seasons" id="seasons" style="--hue: var(--flare)">
+        <div class="wrap split flip">
+          <div class="head rise">
+            <span class="kicker">Every day of the year</span>
+            <h2>Dressed for the day.</h2>
+            <p>
+              The little astronaut at the heart of Launch changes with the seasons, and turns up for the days
+              that matter: 17 May, Halloween, Christmas and more. Small things, slowly.
+            </p>
+            <div class="tabs chips" role="tablist" aria-label="Seasons">
+              <button role="tab" aria-selected="true">Spring<i></i></button>
+              <button role="tab" aria-selected="false">Summer<i></i></button>
+              <button role="tab" aria-selected="false">17 May<i></i></button>
+              <button role="tab" aria-selected="false">Autumn<i></i></button>
+              <button role="tab" aria-selected="false">Halloween<i></i></button>
+              <button role="tab" aria-selected="false">Winter<i></i></button>
+              <button role="tab" aria-selected="false">Christmas<i></i></button>
+            </div>
+          </div>
+          <div class="switch rise" data-auto="3200" data-tabs-before>
+            <div class="stage">
+              <div class="slide on"><img class="piece soft" data-p="c-season-spring" src="img/cards/c-season-spring-dark.png" style="--w: 396" width="396" height="396" alt="Launch in spring" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-summer" src="img/cards/c-season-summer-dark.png" style="--w: 396" width="396" height="396" alt="Launch in summer" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-may17" src="img/cards/c-season-may17-dark.png" style="--w: 396" width="396" height="396" alt="Launch on 17 May, in a bunad with a flag" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-autumn" src="img/cards/c-season-autumn-dark.png" style="--w: 396" width="396" height="396" alt="Launch in autumn, with falling leaves" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-halloween" src="img/cards/c-season-halloween-dark.png" style="--w: 396" width="396" height="396" alt="Launch at Halloween" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-winter" src="img/cards/c-season-winter-dark.png" style="--w: 396" width="396" height="396" alt="Launch in winter" /></div>
+              <div class="slide"><img class="piece soft" data-p="c-season-christmas" src="img/cards/c-season-christmas-dark.png" style="--w: 396" width="396" height="396" alt="Launch at Christmas, in a Santa hat with presents" /></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ science ============ -->
+      <section class="chapter science" id="science">
+        <div class="wrap">
+          <div class="head rise">
+            <span class="kicker">The science</span>
+            <h2>Every number has a source.</h2>
+            <p>Nothing here is a black box. Each score is built from published research, and its method is written down.</p>
+          </div>
+          <div class="facts rise">
+            <div class="fact" style="--hue: var(--orbit)">
+              <b>Bio age</b>
+              <p>Built from hazard ratios in large cohort studies, such as cardio fitness and daily steps, turned into years.<sup><a href="#s1">1</a></sup></p>
+            </div>
+            <div class="fact" style="--hue: var(--flare)">
+              <b>Energy</b>
+              <p>Drains while you're awake at the rate of the two-process model of sleep regulation.<sup><a href="#s2">2</a></sup></p>
+            </div>
+            <div class="fact" style="--hue: var(--active)">
+              <b>Training load</b>
+              <p>Measured as Banister's training impulse, from your heart rate through each session.<sup><a href="#s3">3</a></sup></p>
+            </div>
+            <div class="fact" style="--hue: var(--food)">
+              <b>Diet score</b>
+              <p>Built on the Alternative Healthy Eating Index, the diet score most tied to a longer life.<sup><a href="#s4">4</a></sup></p>
+            </div>
+          </div>
+          <ol class="sources">
+            <li id="s1">Kodama et al., JAMA 2009; Mandsager et al., JAMA Network Open 2018; Paluch et al., Lancet Public Health 2022.</li>
+            <li id="s2">Daan, Beersma &amp; Borbély, American Journal of Physiology 1984.</li>
+            <li id="s3">Banister, Physiological Testing of the High-Performance Athlete, 1991.</li>
+            <li id="s4">Chiuve et al., Journal of Nutrition 2012; Shan et al., JAMA Internal Medicine 2023.</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ privacy ============ -->
+      <section class="chapter" id="privacy">
+        <div class="wrap">
+          <div class="head rise">
+            <span class="kicker">Privacy</span>
+            <h2>Nothing to sign up for.</h2>
+            <p>Ambrose reads Health Connect and does the rest on your phone. Something leaves it only when you use a feature that needs it.</p>
+          </div>
+          <div class="cards rise">
+            <div class="card"><h3>No account</h3><p>No sign-up and no Ambrose server holding your data. Uninstalling deletes Ambrose's copy.</p></div>
+            <div class="card"><h3>AI only if you want it</h3><p>Off by default. Turn it on with the AI service you choose, even one on your own computer.</p></div>
+            <div class="card"><h3>Read-only</h3><p>Ambrose never writes to Health Connect, and you can take any permission back there at any time.</p></div>
+          </div>
+          <p class="more"><a href="privacy.html">Read the privacy policy</a></p>
+        </div>
+      </section>
+
+      <!-- ============ join ============ -->
       <section class="join" id="join">
-        <h2>Join the test.</h2>
-        <p>
-          Ambrose is in testing on Android, with a small group of people who wear a watch or ring every day. Testers
-          get each new version the day it's made, and their feedback shapes what comes next.
-        </p>
-        <a class="button" href="#join">Ask for an invite</a>
+        <div class="wrap rise">
+          <img src="mark.svg" alt="" width="64" height="64" />
+          <h2>Join the test.</h2>
+          <p>
+            Ambrose is in testing on Android, with a small group of people who wear a watch or ring every day.
+            Testers get each new version the day it's made, and their feedback shapes what comes next.
+          </p>
+          <a class="button" href="#join">Ask for an invite</a>
+        </div>
       </section>
     </main>
 
@@ -193,9 +309,11 @@
         <a href="privacy.html">Privacy</a>
         <span class="fine">
           Ambrose's numbers are wellness estimates, not medical advice or a diagnosis, and Ambrose isn't a medical
-          device. Screenshots show made-up demo data.
+          device. Pictures show made-up demo data.
         </span>
       </div>
     </footer>
+
+    <script src="site.js"></script>
   </body>
 </html>

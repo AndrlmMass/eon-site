@@ -4,7 +4,7 @@
 // Every /api call is answered here with "no source connected", so the app shows its demo data
 // and nothing real can reach a picture. Needs Chrome; nothing to install.
 import { spawn } from 'node:child_process';
-import { mkdirSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -17,16 +17,52 @@ const PORT = 9333;
 const PHONE = { width: 412, height: 915, deviceScaleFactor: 3, mobile: true };
 
 // each shot starts on Launch and takes its steps: tap something by its words (or its aria-label),
-// scroll the page down, or wait
+// scroll the page down, or wait. A shot with `cut` keeps only one piece of the screen: the
+// element holding all of `texts`, or with `card` the card around it; with `above` the strip from
+// that height down to the card's top instead (the globe over the Energy chart, Orbit's hologram).
+// `energyAt` reads the made-up day up to that hour (9, 15.5 or 20.5).
+const CLOSE = { tap: 'Close', optional: true }; // Launch sometimes asks about last night in a bubble
 const SHOTS = [
-  // Launch sometimes asks about last night in a bubble over the rings: closed when it's there
-  { name: 'launch', steps: [{ tap: 'Close', optional: true }] },
-  { name: 'launch-day', steps: [{ tap: 'Close', optional: true }, { scroll: 1500 }] },
+  // whole screens
+  { name: 'launch', steps: [CLOSE] },
+  { name: 'launch-day', steps: [CLOSE, { scroll: 1500 }] },
   { name: 'energy', steps: [{ tap: 'Energy' }] },
   { name: 'food', steps: [{ tap: 'Food' }] },
   { name: 'probe', steps: [{ tap: 'Probe' }] },
   { name: 'thrust', steps: [{ tap: 'Thrust' }] },
-  { name: 'orbit', demo: true, steps: [{ tap: 'Orbit' }] },
+  { name: 'orbit', steps: [{ tap: 'Orbit', wait: 7000 }] },
+  // single pieces, for the site
+  { name: 'c-rings', steps: [CLOSE], cut: { texts: ['Energy', 'Food', 'Exertion'] } },
+  { name: 'c-rhr', steps: [CLOSE], cut: { texts: ['Resting HR'], card: true } },
+  { name: 'c-hrv', steps: [CLOSE], cut: { texts: ['HRV'], card: true } },
+  { name: 'c-steps', steps: [CLOSE], cut: { texts: ['Steps'], card: true } },
+  { name: 'c-zone', steps: [CLOSE], cut: { texts: ['Zone minutes'], card: true } },
+  { name: 'c-day', steps: [CLOSE], cut: { texts: ['Skyr bowl', 'Apple and almonds'], card: true } },
+  ...[
+    ['morning', 9],
+    ['afternoon', 15.5],
+    ['evening', 20.5],
+  ].flatMap(([k, h]) => [
+    { name: `c-globe-${k}`, energyAt: h, steps: [{ tap: 'Energy' }], cut: { texts: ['time of day'], card: true, above: 63 } },
+    { name: `c-chart-${k}`, energyAt: h, steps: [{ tap: 'Energy' }], cut: { texts: ['time of day'], card: true } },
+  ]),
+  // the avatar and rings dressed for the seasons and a few holidays (the app's `?season=` preview)
+  ...['spring', 'summer', 'autumn', 'winter', 'may17', 'halloween', 'christmas'].map((k) => ({
+    name: `c-season-${k}`,
+    query: `&season=${k}`,
+    steps: [CLOSE],
+    cut: { texts: ['Energy', 'Food', 'Exertion'] },
+  })),
+  { name: 'c-restore', steps: [{ tap: 'Energy' }], cut: { texts: ['Ways to restore some energy'], card: true } },
+  { name: 'c-diet', steps: [{ tap: 'Food' }], cut: { texts: ['What the score is made of'], card: true, above: 138 } },
+  { name: 'c-radar', steps: [{ tap: 'Food' }], cut: { texts: ['What the score is made of'], card: true } },
+  { name: 'c-find-sleep', steps: [{ tap: 'Probe' }], cut: { texts: ['Every extra hour of sleep'], card: true } },
+  { name: 'c-find-deep', steps: [{ tap: 'Probe' }], cut: { texts: ['Every extra 10 minutes of deep sleep'], card: true } },
+  { name: 'c-load', steps: [{ tap: 'Thrust' }], cut: { texts: ['Training load'], card: true } },
+  { name: 'c-trained', steps: [{ tap: 'Thrust' }], cut: { texts: ['Time trained'], card: true } },
+  { name: 'c-holo', steps: [{ tap: 'Orbit', wait: 7000 }], cut: { texts: ['Pace of aging'], card: true, above: 60 } },
+  { name: 'c-pace', steps: [{ tap: 'Orbit', wait: 7000 }], cut: { texts: ['Pace of aging'], card: true } },
+  { name: 'c-makeup', tall: true, steps: [{ tap: 'Orbit' }], cut: { texts: ['What your bio age is made of'], card: true } },
 ];
 
 const API = {
@@ -127,6 +163,42 @@ const scroll = (y) =>
     .filter((e) => e.scrollHeight > e.clientHeight + 40 && /auto|scroll/.test(getComputedStyle(e).overflowY))
     .forEach((e) => e.scrollTo(0, ${y})))`);
 
+// finds the piece a shot keeps and returns where it is on the page, in CSS pixels
+const cutRect = async ({ texts, card, above }) => {
+  const ok = await run(`(() => {
+    const find = (want) => {
+      const all = [...document.querySelectorAll('body *')].filter((e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 0 && r.height > 0 && (e.getAttribute('aria-label') === want || e.textContent.trim() === want);
+      });
+      return all.find((a) => !all.some((b) => b !== a && a.contains(b))) ?? all[0];
+    };
+    const els = ${JSON.stringify(texts)}.map(find);
+    if (els.some((e) => !e)) return false;
+    let el = els[0];
+    while (el && !els.every((e) => el.contains(e))) el = el.parentElement;
+    const isCard = (e) => {
+      const cs = getComputedStyle(e);
+      return parseFloat(cs.borderTopLeftRadius) >= 12 && (cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || cs.backgroundImage !== 'none');
+    };
+    if (${!!card}) while (el && el !== document.body && !isCard(el)) el = el.parentElement;
+    if (${above != null}) {
+      document.scrollingElement.scrollTo(0, 0);
+      document.querySelectorAll('*').forEach((e) => e.scrollTop && (e.scrollTop = 0));
+    } else el.scrollIntoView({ block: 'center' });
+    window.__cut = el;
+    return true;
+  })()`);
+  if (!ok) return null;
+  await wait(900);
+  const r = await run(`(() => {
+    const r = window.__cut.getBoundingClientRect();
+    return { x: r.left + scrollX, y: r.top + scrollY, w: r.width, h: r.height, r: parseFloat(getComputedStyle(window.__cut).borderTopLeftRadius) || 0 };
+  })()`);
+  return above != null ? { x: 0, y: above, w: PHONE.width, h: r.y - above - 8, r: 0 } : r;
+};
+const MANIFEST = {};
+
 await send('Page.enable');
 await send('Runtime.enable');
 await send('Fetch.enable', { patterns: [{ urlPattern: '*/api/*', requestStage: 'Request' }] });
@@ -150,20 +222,26 @@ const summary = (
       const d = new Date();
       d.setHours(7, 0, 0, 0);
       const at = (h) => +d + (h - 7) * 3600e3;
-      // read up to mid-afternoon at the latest, so the globe isn't drained to the evening
-      const now = Math.min(Date.now(), at(15.5));
-      const mins = [];
-      for (let t = at(7); t < now; t += 60e3) {
-        const h = 7 + (t - at(7)) / 3600e3;
-        const bpm = h >= 17.5 && h < 18.33 ? 150 : h >= 13 && h < 13.5 ? 56 : h >= 8 && h < 8.4 ? 112 : 74 + 6 * Math.sin(h * 2.3);
-        mins.push([t, bpm]);
-      }
-      const day = energyDay({
-        start: 72, wake: at(7), now, mins, rest: 52, max: 188,
-        sleeps: [[at(14.5), at(15)]].filter(([a]) => a < now),
-        still: (t) => !(t >= at(8) && t < at(8.4)) && !(t >= at(17.5) && t < at(18.33)),
-        stress: (t) => (t >= at(10) && t < at(11.5) ? 85 : 45),
-      });
+      // the made-up day read up to an hour of it: morning, afternoon (the default) and evening,
+      // so the site can show the Energy page as the day goes
+      const energyAt = (H) => {
+        const now = at(H);
+        const mins = [];
+        for (let t = at(7); t < now; t += 60e3) {
+          const h = 7 + (t - at(7)) / 3600e3;
+          const bpm = h >= 17.5 && h < 18.33 ? 150 : h >= 13 && h < 13.5 ? 56 : h >= 8 && h < 8.4 ? 112 : 74 + 6 * Math.sin(h * 2.3);
+          mins.push([t, bpm]);
+        }
+        const day = energyDay({
+          start: 72, wake: at(7), now, mins, rest: 52, max: 188,
+          sleeps: [[at(14.5), at(15)]].filter(([a]) => a < now),
+          still: (t) => !(t >= at(8) && t < at(8.4)) && !(t >= at(17.5) && t < at(18.33)),
+          stress: (t) => (t >= at(10) && t < at(11.5) ? 85 : 45),
+        });
+        return { ...withNight(day, at(-0.92), 18), bedUsual: 23 * 60 + 10 };
+      };
+      const energies = Object.fromEntries([9, 15.5, 20.5].map((h) => [h, energyAt(h)]));
+      const now = at(15.5);
       const s = demoData().s;
       // training load: 60 made-up days
       const days = [];
@@ -199,7 +277,23 @@ const summary = (
         meals.push({ id: n + 1, eatenAt: new Date(at(m.h)).toISOString(), name: m.name, items, totals, note: '', source: 'search', diet: dayIntake(items, facts) });
       }
       const load = { available: true, source: 'minutes', sex: 'male', hrMax: 188, hrMaxMethod: 'age', calibrating: false, latest: days[days.length - 1], days };
-      return { ...s, load, meals, energy: { ...withNight(day, at(-0.92), 18), bedUsual: 23 * 60 + 10 } };
+      // a made-up aging result, the one the app's own Orbit preview uses (orbitPreview.tsx)
+      const part = (key, name, value, unit, years) => ({ key, name, value, unit, reference: null, years, recentYears: years, source: '', missing: null });
+      const aging = {
+        available: true, age: 34, eonAge: 31.2, eonAgeCI: [29.4, 33], recentAge: 29.1, pace: 0.88, paceCI: [0.68, 1.08],
+        windowDays: 180, recentDays: 30, nights: 140, calibrating: false,
+        blood: { date: '2026-09-14', phenoAge: 31.8, weight: 0.3, habitAge: 29.1 },
+        contributors: [
+          part('rhr', 'Resting heart rate', 52, 'bpm', -1.1),
+          part('steps', 'Daily steps', 9240, 'steps', -0.9),
+          part('zone', 'Heart-rate zone time', 165, 'min a week', -0.7),
+          part('strength', 'Strength training', 2, 'a week', -0.2),
+          part('sri', 'Sleep consistency', 71, 'of 100', 0.3),
+          part('sleep', 'Hours of sleep', 7.6, 'h', -0.4),
+          part('vo2max', 'Cardio fitness', 52, 'VO₂max', -1.6),
+        ],
+      };
+      return { ...s, load, meals, aging, energy: energies[15.5], energies };
     })()`,
   })
 ).result.value;
@@ -213,14 +307,26 @@ for (const theme of ['dark', 'light']) {
   });
   for (const shot of SHOTS.filter((s) => !ONLY || ONLY.includes(s.name))) {
     demoShot = !!shot.demo;
-    await send('Page.navigate', { url: `${APP}/?demo` });
+    API['/api/summary'] = { ...summary, energy: summary.energies[shot.energyAt ?? 15.5] };
+    await send('Emulation.setDeviceMetricsOverride', shot.tall ? { ...PHONE, height: 1700 } : PHONE);
+    await send('Page.navigate', { url: `${APP}/?demo${shot.query ?? ''}` });
     await wait(7000); // the launch dive and the first draw
     for (const step of shot.steps) {
       if (step.tap && !(await tap(step.tap)) && !step.optional) console.warn(`${shot.name}: nothing called "${step.tap}"`);
       if (step.scroll) await scroll(step.scroll);
       await wait(step.wait ?? 3000);
     }
-    const { data } = await send('Page.captureScreenshot', { format: 'png' });
+    let clip;
+    if (shot.cut) {
+      const r = await cutRect(shot.cut);
+      if (!r) {
+        console.warn(`${shot.name}: nothing to cut`);
+        continue;
+      }
+      clip = { x: r.x, y: r.y, width: r.w, height: r.h, scale: 1 };
+      MANIFEST[shot.name] = { w: Math.round(r.w), h: Math.round(r.h), r: r.r };
+    }
+    const { data } = await send('Page.captureScreenshot', clip ? { format: 'png', clip, captureBeyondViewport: true } : { format: 'png' });
     const file = join(OUT, `${shot.name}-${theme}.png`);
     writeFileSync(file, Buffer.from(data, 'base64'));
     console.log(file);
@@ -228,6 +334,14 @@ for (const theme of ['dark', 'light']) {
   await send('Page.removeScriptToEvaluateOnNewDocument', { identifier: script.identifier });
 }
 
+if (Object.keys(MANIFEST).length) {
+  // each piece's size and corner radius in CSS pixels, for the site's frames
+  let kept = {};
+  try {
+    kept = JSON.parse(readFileSync(join(OUT, 'pieces.json'), 'utf8'));
+  } catch {}
+  writeFileSync(join(OUT, 'pieces.json'), JSON.stringify({ ...kept, ...MANIFEST }, null, 2));
+}
 ws.close();
 chrome.kill();
 await wait(500);
