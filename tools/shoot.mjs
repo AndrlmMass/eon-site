@@ -46,8 +46,8 @@ const SHOTS = [
     { name: `c-globe-${k}`, energyAt: h, steps: [{ tap: 'Energy' }], cut: { texts: ['time of day'], card: true, above: 63 } },
     { name: `c-chart-${k}`, energyAt: h, steps: [{ tap: 'Energy' }], cut: { texts: ['time of day'], card: true } },
   ]),
-  // the avatar and rings dressed for the seasons and a few holidays (the app's `?season=` preview)
-  ...['spring', 'summer', 'autumn', 'winter', 'may17', 'halloween', 'christmas'].map((k) => ({
+  // the avatar and rings dressed for the seasons (the app's `?season=` preview); the holidays stay a surprise
+  ...['spring', 'summer', 'autumn', 'winter'].map((k) => ({
     name: `c-season-${k}`,
     query: `&season=${k}`,
     steps: [CLOSE],
