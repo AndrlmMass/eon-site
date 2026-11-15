@@ -11,7 +11,7 @@ const CHROME = process.env.CHROME ?? 'C:/Program Files/Google/Chrome/Application
 const PORT = 9334;
 const PAGES = ['', 'privacy.html'];
 const SIZES = [
-  { name: 'phone', width: 412, height: 915, deviceScaleFactor: 2, mobile: true },
+  { name: 'phone', width: 412, height: 915, deviceScaleFactor: 1.6, mobile: true },
   { name: 'desktop', width: 1366, height: 900, deviceScaleFactor: 1, mobile: false },
 ];
 
