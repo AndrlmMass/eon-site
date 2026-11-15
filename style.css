@@ -1,0 +1,433 @@
+/* EON's own design, copied from the app's src/theme.ts: the same grounds, greys, area colours and
+   type. Dark is the default, as in the app; daylight follows the visitor's system setting. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+  --sunk: #16171b;
+  --bg: #1c1d22;
+  --well: #212228;
+  --card: #272930;
+  --raised: #30333b;
+  --line: #383b45;
+  --dim: #9da1ad;
+  --sub: #bec2cc;
+  --body: #dde0e7;
+  --ink: #f5f6f9;
+  --flare: #ffb45c;
+  --ember: #e2531c;
+  /* the four areas: activity, health, calm (sleep), food */
+  --active: #5fd39a;
+  --health: #ff6b8b;
+  --calm: #6f9bff;
+  --food: #e8c07d;
+  /* how strongly the areas tint and glow a card */
+  --wash: 0.16;
+  --glow: 0.28;
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px rgba(0, 0, 0, 0.35);
+  --display: 'Space Grotesk', Figtree, sans-serif;
+  --text: Figtree, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --sunk: #cdd1d8;
+    --bg: #dadde3;
+    --well: #d3d7dd;
+    --card: #f7f8fa;
+    --raised: #e3e6eb;
+    --line: #d0d4db;
+    --dim: #676f82;
+    --sub: #61697c;
+    --body: #5b6377;
+    --ink: #555d70;
+    --flare: #9d3710;
+    --ember: #b8431a;
+    --active: #0d673b;
+    --health: #a72645;
+    --calm: #2d55ae;
+    --food: #795118;
+    --wash: 0.12;
+    --glow: 0.22;
+    --shadow: 0 1px 2px rgba(74, 80, 104, 0.12), 0 14px 40px rgba(74, 80, 104, 0.16);
+  }
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--text);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: var(--ink);
+}
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---- top bar ---- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.top .wrap {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 60px;
+}
+.word {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.top nav {
+  margin-left: auto;
+  display: flex;
+  gap: 22px;
+  font-size: 15px;
+}
+.top nav a {
+  color: var(--sub);
+  text-decoration: none;
+}
+.top nav a:hover {
+  color: var(--ink);
+}
+
+/* ---- hero ---- */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  padding: 72px 0 40px;
+}
+.hero h1 {
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.05;
+  margin: 0;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--flare);
+}
+.lede {
+  font-size: 19px;
+  color: var(--sub);
+  margin: 22px 0 30px;
+  max-width: 34em;
+}
+.button {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  text-decoration: none;
+}
+.note {
+  display: block;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--dim);
+}
+
+/* a screenshot in a phone's rounded frame */
+.phone {
+  display: block;
+  width: 100%;
+  border-radius: 34px;
+  overflow: hidden;
+  border: 6px solid var(--sunk);
+  box-shadow: var(--shadow);
+  background: var(--sunk);
+  max-width: 330px;
+  margin: 0 auto;
+}
+.hero .phone {
+  max-width: 340px;
+  box-shadow: var(--shadow), 0 0 120px rgba(226, 83, 28, calc(var(--glow) * 0.8));
+}
+
+/* ---- three plain facts under the hero ---- */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 24px 0 64px;
+}
+.fact {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 20px 22px;
+}
+.fact b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink);
+}
+.fact span {
+  font-size: 15px;
+  color: var(--sub);
+}
+
+/* ---- the four tabs ---- */
+.area {
+  --hue: var(--active);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+  margin: 0 0 32px;
+  padding: 48px;
+  border-radius: 32px;
+  border: 1px solid color-mix(in srgb, var(--hue) 30%, var(--line));
+  background:
+    radial-gradient(120% 80% at 0% 0%, color-mix(in srgb, var(--hue) calc(var(--wash) * 100%), transparent), transparent 70%),
+    var(--card);
+  box-shadow: var(--shadow);
+}
+.area.flip .copy {
+  order: 2;
+}
+.area .phone {
+  box-shadow: var(--shadow), 0 0 90px color-mix(in srgb, var(--hue) calc(var(--glow) * 100%), transparent);
+}
+.kicker {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hue);
+}
+.area h2 {
+  font-size: clamp(30px, 4vw, 40px);
+  line-height: 1.1;
+  margin: 8px 0 16px;
+}
+.area ul {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.area li {
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+  color: var(--sub);
+  font-size: 16px;
+}
+.area li b {
+  color: var(--ink);
+  font-weight: 600;
+}
+.launch {
+  --hue: var(--health);
+}
+.probe {
+  --hue: var(--calm);
+}
+.thrust {
+  --hue: var(--active);
+}
+.orbit {
+  --hue: var(--flare);
+}
+
+/* ---- privacy and AI ---- */
+.band {
+  padding: 56px 0 24px;
+}
+.band h2 {
+  font-size: clamp(30px, 4vw, 40px);
+  margin: 0 0 8px;
+}
+.band > p {
+  color: var(--sub);
+  max-width: 40em;
+  margin: 0 0 28px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 22px 24px;
+}
+.card h3 {
+  font-size: 20px;
+  margin: 0 0 6px;
+}
+.card p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--sub);
+}
+
+.join {
+  margin: 56px 0 0;
+  padding: 48px;
+  border-radius: 32px;
+  text-align: center;
+  background:
+    radial-gradient(90% 120% at 50% 0%, rgba(226, 83, 28, calc(var(--wash) * 1.1)), transparent 70%),
+    var(--card);
+  border: 1px solid var(--line);
+}
+.join h2 {
+  font-size: clamp(30px, 4vw, 40px);
+  margin: 0 0 10px;
+}
+.join p {
+  color: var(--sub);
+  max-width: 34em;
+  margin: 0 auto 26px;
+}
+
+footer {
+  margin-top: 64px;
+  padding: 28px 0 40px;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+  color: var(--dim);
+}
+footer .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+}
+footer a {
+  color: var(--sub);
+}
+footer .fine {
+  flex-basis: 100%;
+}
+
+/* ---- the privacy policy ---- */
+.doc {
+  max-width: 720px;
+  padding-top: 48px;
+}
+.doc h1 {
+  font-size: clamp(36px, 5vw, 48px);
+  margin: 0 0 6px;
+}
+.doc .date {
+  color: var(--dim);
+  font-size: 15px;
+  margin: 0 0 28px;
+}
+.doc section {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 22px 26px;
+  margin: 0 0 14px;
+}
+.doc h2 {
+  font-size: 22px;
+  margin: 0 0 6px;
+}
+.doc section p,
+.doc section li {
+  color: var(--sub);
+  font-size: 16px;
+}
+.doc section p {
+  margin: 8px 0 0;
+}
+.doc b {
+  color: var(--ink);
+}
+.doc ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+/* ---- phones ---- */
+@media (max-width: 820px) {
+  body {
+    font-size: 16px;
+  }
+  .top nav {
+    gap: 16px;
+    font-size: 14px;
+  }
+  .top nav .wide {
+    display: none;
+  }
+  .hero,
+  .area {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .hero {
+    padding: 44px 0 24px;
+  }
+  .area {
+    padding: 28px 22px;
+    border-radius: 28px;
+  }
+  .area.flip .copy {
+    order: 0;
+  }
+  .facts,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .phone {
+    max-width: 280px;
+    border-radius: 30px;
+  }
+  .join {
+    padding: 32px 22px;
+  }
+}

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EON: your watch's data, read on your phone</title>
+    <meta
+      name="description"
+      content="EON turns what your watch writes to Health Connect into recovery, sleep, training and pace of aging. Worked out on your phone, with no account and no EON server."
+    />
+    <meta name="theme-color" content="#1c1d22" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#dadde3" media="(prefers-color-scheme: light)" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap">
+        <a class="word" href="./">EON</a>
+        <nav>
+          <a class="wide" href="#launch">The app</a>
+          <a href="#privacy">Privacy</a>
+          <a href="#join">Join the test</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="hero">
+        <div>
+          <h1>Your watch already knows. <em>EON</em> tells you what it means.</h1>
+          <p class="lede">
+            Recovery, sleep, training load and how fast you're aging, from the data your watch or ring writes to
+            Health Connect. Every number is worked out on your phone. There's no account, and no EON server.
+          </p>
+          <a class="button" href="#join">Join the test</a>
+          <span class="note">Android, by invitation, while EON is in testing.</span>
+        </div>
+        <picture class="phone">
+          <source srcset="img/launch-light.png" media="(prefers-color-scheme: light)" />
+          <img src="img/launch-dark.png" alt="EON's Launch screen: recovery 72%, stress 31, last night 7 h 24 m, and the day so far" width="1236" height="2745" />
+        </picture>
+      </section>
+
+      <section class="facts">
+        <div class="fact"><b>Any watch on Health Connect</b><span>Fitbit, Pixel Watch, Garmin, Samsung, Oura and more.</span></div>
+        <div class="fact"><b>Worked out on your phone</b><span>Your data stays there. EON never sees it.</span></div>
+        <div class="fact"><b>From open research</b><span>Every score is explained, down to its formula.</span></div>
+      </section>
+
+      <section class="area launch" id="launch">
+        <div class="copy">
+          <span class="kicker">Launch</span>
+          <h2>Your body today, at a glance.</h2>
+          <p>Four numbers when you wake up, and the day as it happened underneath: how you slept, what you ate, when you trained.</p>
+          <ul>
+            <li><b>Recovery</b> from your heart rate variability and resting heart rate</li>
+            <li><b>Stress</b> through the day, hour by hour</li>
+            <li><b>Sleep</b> with its stages and a score</li>
+            <li><b>Exertion</b> against a target that fits your week</li>
+          </ul>
+        </div>
+        <picture class="phone">
+          <source srcset="img/launch-day-light.png" media="(prefers-color-scheme: light)" />
+          <img src="img/launch-day-dark.png" alt="Launch: the day as it happened, with sleep, breathwork and meals on a timeline" width="1236" height="2745" loading="lazy" />
+        </picture>
+      </section>
+
+      <section class="area probe flip">
+        <div class="copy">
+          <span class="kicker">Probe</span>
+          <h2>What moves your numbers.</h2>
+          <p>
+            Probe looks for links in your own days: more sleep and your mood the next day, a late coffee and your
+            night, steps and your HRV. It tells you how sure it is, and only calls a link confirmed when your data
+            holds it up.
+          </p>
+        </div>
+        <picture class="phone">
+          <source srcset="img/probe-light.png" media="(prefers-color-scheme: light)" />
+          <img src="img/probe-dark.png" alt="Probe: every extra hour of sleep, 0.39 more mood points that day, confirmed" width="1236" height="2745" loading="lazy" />
+        </picture>
+      </section>
+
+      <section class="area thrust">
+        <div class="copy">
+          <span class="kicker">Thrust</span>
+          <h2>Train hard on the right days.</h2>
+          <p>Log a workout as you lift, and see how the load of the last weeks sits against your recovery.</p>
+          <ul>
+            <li><b>Strain</b> for today, next to how recovered you are</li>
+            <li><b>Net load</b> over 28 days: building up or recovering</li>
+            <li><b>Muscle recovery</b> for each muscle group you trained</li>
+          </ul>
+        </div>
+        <picture class="phone">
+          <source srcset="img/thrust-light.png" media="(prefers-color-scheme: light)" />
+          <img src="img/thrust-dark.png" alt="Thrust: start workout, strain 11.6, net load over 28 days, muscle recovery" width="1236" height="2745" loading="lazy" />
+        </picture>
+      </section>
+
+      <section class="area orbit flip">
+        <div class="copy">
+          <span class="kicker">Orbit</span>
+          <h2>How fast you're aging.</h2>
+          <p>
+            Your pace of aging from your fitness, sleep, training and diet, built from published research. 0.91×
+            means each calendar year costs your body eleven months. Orbit shows what makes up your pace, and which
+            part has the most room to move.
+          </p>
+        </div>
+        <picture class="phone">
+          <source srcset="img/orbit-light.png" media="(prefers-color-scheme: light)" />
+          <img src="img/orbit-dark.png" alt="Orbit: pace of aging 0.91×, blood age 31.4 against 34.0" width="1236" height="2745" loading="lazy" />
+        </picture>
+      </section>
+
+      <section class="band" id="privacy">
+        <h2>Your data stays on your phone.</h2>
+        <p>EON reads Health Connect and does the rest on the phone. Something leaves it only when you use a feature that needs it.</p>
+        <div class="cards">
+          <div class="card">
+            <h3>No account</h3>
+            <p>Nothing to sign up for, and no EON server holding your data. Uninstalling deletes EON's copy.</p>
+          </div>
+          <div class="card">
+            <h3>AI only if you want it</h3>
+            <p>AI is off by default. Turn it on with the AI service of your choice, even one on your own computer.</p>
+          </div>
+          <div class="card">
+            <h3>Read-only</h3>
+            <p>EON never writes to Health Connect, and you can take any permission away there at any time.</p>
+          </div>
+        </div>
+        <p style="margin-top: 20px"><a href="privacy.html">Read the privacy policy</a></p>
+      </section>
+
+      <section class="join" id="join">
+        <h2>Join the test.</h2>
+        <p>
+          EON is in testing on Android, with a small group of people who wear a watch or ring every day. Testers get
+          each new version the day it's made, and their feedback shapes what comes next.
+        </p>
+        <a class="button" href="#join">Ask for an invite</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <span>EON</span>
+        <a href="privacy.html">Privacy</a>
+        <span class="fine">
+          EON's numbers are wellness estimates, not medical advice or a diagnosis, and EON isn't a medical device.
+          Screenshots show made-up demo data.
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
