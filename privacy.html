@@ -31,7 +31,7 @@
 
     <main class="wrap doc">
       <h1>Privacy policy</h1>
-      <p class="date">Ambrose for Android. Last updated 15 November 2026.</p>
+      <p class="date">Ambrose for Android. Last updated 16 November 2026.</p>
 
       <section>
         <h2>What Ambrose reads</h2>
@@ -50,8 +50,8 @@
       <section>
         <h2>Where it stays</h2>
         <p>
-          On your phone. There's no Ambrose account and no Ambrose server, so nobody receives your data from Ambrose.
-          Uninstalling the app deletes its copy. If Android's backup to your Google account is on, it may include
+          On your phone. There's no Ambrose account, and every score is worked out on the phone. Nothing about your
+          health leaves it unless you use one of the features below. Uninstalling the app deletes its copy. If Android's backup to your Google account is on, it may include
           Ambrose's data, but never your API keys.
         </p>
       </section>
@@ -70,7 +70,48 @@
             them and the key numbers behind the written notes go to the AI service you connect, under your own
             account. Ambrose asks before it sends anything the first time. With AI off, nothing goes there.
           </li>
+          <li><b>Crew, only if you join:</b> see below.</li>
+          <li><b>Usage statistics, only if you say yes:</b> see below.</li>
         </ul>
+      </section>
+
+      <section>
+        <h2>Crew</h2>
+        <p>
+          Crew lets you compete with friends you add, day by day. To make that work without anyone else being able to
+          read your numbers, Ambrose uses a small relay server on Cloudflare that only passes sealed messages between
+          phones.
+        </p>
+        <ul>
+          <li>
+            <b>What your friends see:</b> your display name, your avatar, and today's numbers for the competitions you
+            choose to share (for example sleep, HRV or steps).
+          </li>
+          <li>
+            <b>What the relay keeps:</b> your nickname and a public key, so friends can find you; friend requests; and
+            each day's card. Requests and cards are encrypted on your phone with keys only you and your friends hold,
+            so the relay can't read your name, avatar or numbers. It can see which nickname sent a request to which.
+          </li>
+          <li>
+            <b>How long:</b> a request is deleted after 14 days, a day's card after 30, and your nickname about 90 days after
+            you last opened Ambrose. The relay keeps no request logs.
+          </li>
+          <li>
+            <b>Leaving:</b> Leave Crew in the app removes your cards and nickname from the relay straight away.
+          </li>
+        </ul>
+        <p>Your Crew nickname is never linked to a subscription or to usage statistics.</p>
+      </section>
+
+      <section>
+        <h2>Usage statistics</h2>
+        <p>
+          Ambrose asks once whether you'll help improve it. If you say yes, it sends which screens you open and for how
+          long, which cards and sections you tap or see, and what you hide or move when you change the layout. These go
+          to PostHog, on servers in the EU, under a random id that isn't your name, nickname or subscription. They never
+          include health numbers, and PostHog discards your IP address. You can turn this off any time in Settings,
+          under Help improve Ambrose. If you say no, nothing is sent.
+        </p>
       </section>
 
       <section>
@@ -78,7 +119,8 @@
         <p>
           Ambrose uses data from Health Connect only to show you your own scores, trends and notes in the app. It is never
           sold, never used for advertising, and never shared with anyone, except with the AI service you connect
-          yourself, and only while AI is on.
+          yourself while AI is on, and, sealed, with the friends in your Crew if you join one. It is never part of usage
+          statistics.
         </p>
       </section>
 
@@ -86,7 +128,7 @@
         <h2>Deleting your data</h2>
         <p>
           Settings → Your data → <b>Delete everything</b> clears your meals, workouts, check-ins, profile, settings and
-          API keys from the phone, and Ambrose starts over. Uninstalling does the same. Health Connect keeps its own data,
+          API keys from the phone, removes your Crew cards and nickname from the relay, and Ambrose starts over. Uninstalling does the same. Health Connect keeps its own data,
           which you manage in Health Connect.
         </p>
       </section>
@@ -108,7 +150,7 @@
         <h2>Changes and contact</h2>
         <p>
           If this policy changes, the new version is posted here with a new date. Questions about your privacy:
-          <b>[contact address]</b>.
+          <a href="mailto:ambrose.app.help@gmail.com">ambrose.app.help@gmail.com</a>.
         </p>
       </section>
     </main>
